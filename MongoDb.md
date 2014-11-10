@@ -266,11 +266,69 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
 Fetched 1 record(s) in 1ms -- Index[none]
 ```
 
-Para inserir diversos registros de uma só vez podemos fazer da seguinte forma:
+Para inserir diversos registros de uma só vez podemos criar um array com nossos objetos como abaixo:
+
+```
+var ps = [{"name":"Pinga","description":"da braba po tubão","price": 4.50},{"name":"Uísque","description":"Pra preiboi toma com energético","price":80.00},{"name":"Champagne","description":"só podia ser saopaulino","price":130.00 }]
+suissacorp(mongod-2.4.8) workshop-be-mean> ps
+[
+  {
+    "name": "Pinga",
+    "description": "da braba po tubão",
+    "price": 4.5
+  },
+  {
+    "name": "Uísque",
+    "description": "Pra preiboi toma com energético",
+    "price": 80
+  },
+  {
+    "name": "Champagne",
+    "description": "só podia ser saopaulino",
+    "price": 130
+  }
+]
 
 ```
 
-``
+
+```
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 12
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
+  "name": "Pinga",
+  "description": "da braba po tubão",
+  "price": 4.5
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
+  "name": "Uísque",
+  "description": "Pra preiboi toma com energético",
+  "price": 80
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0b"),
+  "name": "Champagne",
+  "description": "só podia ser saopaulino",
+  "price": 130
+}
+Fetched 4 record(s) in 1ms -- Index[none]
+
+```
+
+*Dica: quando utilizar o comando `find` ou `findOne` e não tiver o mongo-hacker, utilize no final a função `pretty()`.
+
+```
+find().pretty()
+```
+
+
 
 
 
