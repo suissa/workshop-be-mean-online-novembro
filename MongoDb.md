@@ -119,7 +119,7 @@ Para apagarmos os dados dessa coleção de teste possuímos 2 comandos: `remove`
 O `remove` apenas apaga os dados, porém a coleção continua existindo, já com o `drop` ele apaga a coleção inteira, como podemos ver abaixo:
 
 ```
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.teste.remove()
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.teste.remove({})
 Removed 2 record(s) in 1ms
 suissacorp(mongod-2.4.8) workshop-online-novembro> db.teste.find()
 Fetched 0 record(s) in 0ms -- Index[none]
@@ -135,6 +135,7 @@ suissacorp(mongod-2.4.8) workshop-online-novembro>
 ```
 
 
+*O `remove` recebe um objeto vazio {} pois precisa de um objeto de query obrigatoriamente, apenas versões acima da 2.6.*
 
 
 
