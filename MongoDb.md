@@ -1,12 +1,115 @@
+#Be MEAN - Criando sistemas inteiros apenas com Javascript
+Vamos aprender com esse material a criar um sistema inteiro utilizando apenas nosso querido e amado Javascript. Desde o Frontend até o Banco de Dados. 
 
+![](https://i.cloudup.com/WI6pC8JKia.png) 
 
-#MongoDb
+##MEAN
+![](https://i.cloudup.com/Taslszh86K.jpg)
+
+###O que siginifica MEAN?
+Nada mais que a sigla das tecnologias utilizadas:
+- MongoDb
+- Express
+- AngularJs
+- Node.js
+
+##Por que usar MEAN?
+Hoje essa stack MEAN nos oferece as mesmas funcionalidades que stacks largamente utilizadas como LAMP/MAMP/WAMP adicionando maior performance opr utilizar tecnologias feitas para escalar como Node.js e MongoDb.
+
+Sem contar que o Javascript é a linguagem mais utilizada na Web não precisando muito esforço para entender o porquê já que é a única linguagem que roda nativamente em qualquer navegador e que foi criada especificamente para a Internet, por mais que ainda precise melhorar muito, mas já está no caminho com o EcmaScript 6.
+
+##Arquitetura
+Nesse Workshop iremos criar um Single Page App onde nosso Frontend feito com AngularJs consumirá os dados do Backend feito com o Node.js e MongoDb.
+![](https://i.cloudup.com/bg9bVWvHGG.png)
+
+##MongoDb
+###NoSQL
+O termo NoSQL foi usado pela primeira vez em 1998 como o nome de um banco de dados relacional de código aberto que não possuía um interface SQL. Seu autor, Carlo Strozzi, alega que o movimento NoSQL "é completamente distinto do modelo relacional e portanto deveria ser mais apropriadamente chamado "NoREL" ou algo que produzisse o mesmo efeito". Porém o termo só voltou a ser assunto em 2009 por um funcionário do Rackspace, Eric Evans, quando Johan Oskarsson da Last.fm queria organizar um evento para discutir bancos de dados open source distribuídos. 
+
+NoSQL são diferentes sistemas de armazenamento que vieram para suprir necessidades onde os bancos de dados tradicionais(Relacionais) são ineficazes. Muitas dessas bases apresentam características muito interessantes como alta performance, escalabilidade, replicação, suporte à dados estruturados, grafos e sub-colunas. 
+
+O NoSQL surgiu da necessidade de uma performance superior e de alta escalabilidade. Os atuais bancos de dados relacionais são muito restritos a isso, sendo necessário a distribuição vertical de servidores, ou seja, quanto mais dados, mais memória e mais disco um servidor precisa. O NoSQL tem uma grande facilidade na distribuição horizontal, ou seja, mais dados, mais servidores, não necessariamente de alta performance. Um grande utilizador desse conceito é o google, que usa computadores de pequeno e médio porte, para a distribuição dos dados, essa forma de utilização e muito mais eficiente e econômica. Alem disso, os bancos de dados NoSQL são muito tolerantes a erros. 
+
+No caso dos bancos NoSQL toda a a informação necessária estará agrupada no mesmo registro, ou seja, em vez de você ter o relacionamento entre várias tabelas para formar uma informação ela estará em sua totalidade no mesmo registro. 
+
+####Por que usar?
+Os bancos de dados NoSQL nasceram de necessidades mais específicas, então quase sempre encontramos algum para resolver melhor algum problema. Caso necessitemos de um sistema que tenha como obrigação alta escalabilidade a baixo custo provavelmente usaremos algum banco de dados NoSQL.   
+Quando nosso banco de dados relacional não aguenta mais requisições crescentes e o servidor ja está no seu máximo essa seria uma boa hora para testar algum NoSQL. Assim como podemos usar mais de um banco NoSQL para tratar de objetivos específicos. 
+Além disso vários bancos NoSQL são schema-less, ou seja, não necessitam que uma estrutura seja pré-definida para a inserção de dados. Isso proporciona maior dinamismo na manipulação dos dados.
+
+####Onde usar?
+Hoje em dia temos vários bancos NoSQL que podem resolver diversos problemas porém eles não são a chave para TODOS os problemas. Ainda existem cenários onde os bancos relacionais são mais indicados, visto que os mesmos possuem propriedades ACID, logo são melhores em cenários onde os dados são muitíssimo importantes e não pode haver nenhuma quebra de referencia. Ou seja não indicaria, ainda, algum banco NoSQL para sistemas de transações financeiras, por exemplo.
+Agora se o seu sistema é alguma rede social, ou algum site que necessite de alta disponibilidade ou escalabilidade com certeza lhe indicaria algum banco NoSQL.
+Entretanto não precisamos mudar todo o sistema para algum banco NoSQL, podemos muito bem utilizar um banco NoSQL e um relacional em conjunto. Como muitos ja fazem hoje em dia mas nem percebem. Por exemplo um sistema que utiliza cache, com certeza esta usando um banco NoSQL no cache como o mais conhecido Memcached. A Api Storage do HTML5 também utiliza um sistema de banco NoSQL do tipo chave-valor.
+
+####Tipo de armazenamento
+Existem diversos tipos de armazenamento, onde cada um trata os dados de uma forma diferente e que pode ser mais específico para o objetivo desejado.
+Os tipo de armazenamento são: Wide Column Store/Column Families, Document Store, Key Value/Tuple Store, Eventually Consistent Key Value Store, Graph Databases, Object Databases, Grid Database Solutions, XML Databases. Lista retirada de http://nosql-database.org/ 
+
+#####Key/Value Store
+Esse é o tipo de banco de dados NoSQL mais simples o conceito dele é uma chave e um valor para essa chave, mas ele é o que aguenta mais carga de dados. Esses tipos de bancos de dados, são o que tem a maior escalabilidade. 
+- Berkeley DB 
+- Tokyo Cabinet 
+- Kyoto Cabinet
+- Project Voldermort 
+- MemcacheDB 
+- SimpleBD 
+- Redis
+- Riak
+
+#####Wide Columns Store
+Fortemente inspirados pelo BigTable do Google eles suportam várias linhas e colunas, alem disso ele permite subcolunas. Alem do BigTable do google outros que usam essa tecnologia são: 
+- HBase(Apache) 
+- HiperTable 
+- Cassandra(Apache) 
+
+#####Document Store
+Baseado em documentos XML ou JSON, podem ser localizados pelo seu id unico ou por qualquer registro que tenha no documento. 
+- CouchDB(Apache) 
+- MongoDB 
+- RavenDB 
+
+#####Graph Store
+Com uma complexibilidade maior esses bancos de dados guardam objetos e não registros como os outros tipos de NoSQL. A busca destes itens são feitas pela navegação destes objetos. 
+- Neo4J 
+- InfoGrid 
+- HyperGraphDB 
+
+Na imagem abaixo podemos ver um gráfico demonstrando a diferença entre o tamanho da base de dados pela complexidade dos seus dados. Assim podemos perceber que os bancos do tipo chave-valor conseguem aguentar mais dados, sendo que seus dados são mais simples, enquanto que os banco do tipo grafo aguentam menos dados porém seus dados são mais complexos.
+
+![](http://blog.3pillarglobal.com/sites/default/files/nosql-3a.png)
+
+###Introdução
+O MongoDB é um dos bancos NoSQL mais utilizados atualmente pela sua facilidade de instalação, documentação e os diversos drivers para inúmeras linguagens de programação. Ele é um banco de dados orientado a documentos, escalável, livre de esquema, de alto desempenho e código aberto escrito em C++.
+Algumas funcionalidades interessantes do MongoDB são: orientação a documentos(JSON/BSON), suporte a index, replicação e alta disponibilidade, auto-sharding, map/reduce GridFS e suporte comercial da 10gen.
+
+####Schemaless
+![](http://www.greenberg-art.com/.Illustrations/.Humorous/qq1sgMessyDesk.jpg)
+O que significa ser livre de esquema? Basicamente é não precisar ter nenhum objeto identificando como será nosso modelo de persistência, ou seja, não terá nada dizendo o nome dos campos nem seus tipos.
+
+E isso é bom? Dependendo do que você quer fazer sim, ele dá maior liberdade para futuras modificações e maiores possibilidades de modelagem em comparação à relacional.
+
+####JSON/BSON
+![](http://wp.clicrbs.com.br/infosfera/files/2014/04/jason-2.jpg)
+O MongoDb é um banco NoSQL orientado a documento [JSON](http://json.org/), ou seja, ele persiste os dados usando o formato [JSON](http://json.org/) criando assim um formato único de troca de dados em todo stack [MEAN](http://bemean.com.br/).
+
+####Replica
+![](http://images.freshnessmag.com/wp-content/uploads/2010/07/bat-pod-replica-1.jpg)
+Possuímos réplicas na maioria dos bancos de dados relacionais também, ela apenas faz o espelhamento dos seus dados de um servidor para outro.
+
+####Sharding
+![](http://www.codefutures.com/img/dbshards-shardit.gif)
+
+####GridFs
+![](http://www.kratedesign.com/wp-content/uploads/2012/11/less-files-more-miles.jpg)
+
 ##Instalação
 
 ###Download
 
 
-Para instalar o MongoDb, após descompactarmos ele, precisamos criar a pasta `/data/db` para que ele persista localmente seus dados, essa pasta é a padrão, você pode mudar a localização dessa pasta via linha de comando: 
+Para instalar o MongoDb, após descompactarmos ele, precisamos criar a pasta `/data/db` para que ele persista localmente seus dados, essa pasta é a padrão, você pode mudar a localização dessa pasta via linha de comando:
+
 
 ```
 mongod --dbpath /minha/pasta
@@ -119,18 +222,18 @@ Para apagarmos os dados dessa coleção de teste possuímos 2 comandos: `remove`
 O `remove` apenas apaga os dados, porém a coleção continua existindo, já com o `drop` ele apaga a coleção inteira, como podemos ver abaixo:
 
 ```
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.teste.remove({})
+suissacorp(mongod-2.4.8) workshop-be-mean> db.teste.remove({})
 Removed 2 record(s) in 1ms
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.teste.find()
+suissacorp(mongod-2.4.8) workshop-be-mean> db.teste.find()
 Fetched 0 record(s) in 0ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-online-novembro> show collections
+suissacorp(mongod-2.4.8) workshop-be-mean> show collections
 system.indexes
 teste
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.teste.drop()
+suissacorp(mongod-2.4.8) workshop-be-mean> db.teste.drop()
 true
-suissacorp(mongod-2.4.8) workshop-online-novembro> show collections
+suissacorp(mongod-2.4.8) workshop-be-mean> show collections
 system.indexes
-suissacorp(mongod-2.4.8) workshop-online-novembro> 
+suissacorp(mongod-2.4.8) workshop-be-mean> 
 
 ```
 
@@ -138,6 +241,36 @@ suissacorp(mongod-2.4.8) workshop-online-novembro>
 *O `remove` recebe um objeto vazio {} pois precisa de um objeto de query obrigatoriamente, apenas versões acima da 2.6.*
 
 
+
+##Inserindo
+
+Para inserir um objeto no MongoDb podemos criá-lo em uma variável e depois passar como parâmetro para a função `insert` ou `save`:
+
+```
+var product = {"name":"Cachaça","description":"Mé brasileiro","price":12.00 }
+suissacorp(mongod-2.4.8) workshop-be-mean> product
+{
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 12
+}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.insert(product)
+Inserted 1 record(s) in 2ms
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 12
+}
+Fetched 1 record(s) in 1ms -- Index[none]
+```
+
+Para inserir diversos registros de uma só vez podemos fazer da seguinte forma:
+
+```
+
+``
 
 
 
