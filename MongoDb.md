@@ -648,6 +648,27 @@ suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
 
 ```
 
+
+**$nor - Não OU**
+
+```
+var query = {$nor: [{name: /vinho/i},{price: {$gte: 40}}]}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
+  "name": "Pinga",
+  "description": "da braba po tubão",
+  "price": 4.5
+}
+Fetched 2 record(s) in 1ms -- Index[none]
+```
+
 Para buscarmos uma faixa específica de preços podemos fazer a seguinte query:
 
 ```
