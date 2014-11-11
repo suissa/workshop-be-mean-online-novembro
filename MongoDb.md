@@ -647,3 +647,25 @@ suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
 }
 
 ```
+
+Para buscarmos uma faixa específica de preços podemos fazer a seguinte query:
+
+```
+//maior ou igual que 12 E menor que 80
+
+var query = {$and: [{price: {$lt: 80}},{price: {$gte: 12}}]}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+{
+  "_id": ObjectId("546157b75b9f2b586cb31d0c"),
+  "name": "Vinho",
+  "price": 12,
+  "description": "Suco de uva alcoolico"
+}
+Fetched 2 record(s) in 28ms -- Index[none]
+```
