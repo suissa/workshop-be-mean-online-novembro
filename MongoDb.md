@@ -751,6 +751,9 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.findOne({name: 'Cachaça'
 ```
 
 
+**$in - IN**
+
+Retorna todos os objetos que possuem algum dos valores do `Array`.
 
 ```
 db.products.find(query)
@@ -780,6 +783,40 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 Fetched 1 record(s) in 0ms -- Index[none]
 ```
 
+**$nin - Not IN**
+
+Retorna todos os objetos que não possuem aqueles valores do `Array`.
+
+```
+var query = {tags: {$nin: ['branquinha']}}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
+  "name": "Pinga",
+  "description": "da braba po tubão",
+  "price": 4.5
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
+  "name": "Uísque",
+  "description": "Pra preiboi toma com energético",
+  "price": 80
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0b"),
+  "name": "Champagne",
+  "description": "só podia ser saopaulino",
+  "price": 130
+}
+{
+  "_id": ObjectId("546157b75b9f2b586cb31d0c"),
+  "name": "Vinho",
+  "price": 12,
+  "description": "Suco de uva alcoolico"
+}
+Fetched 4 record(s) in 2ms -- Index[none]
+
+```
 
 
 
