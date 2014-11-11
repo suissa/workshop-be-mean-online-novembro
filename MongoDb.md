@@ -690,3 +690,26 @@ suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
 }
 Fetched 2 record(s) in 28ms -- Index[none]
 ```
+
+
+**$ne - Not equal**
+
+Não aceita REGEX.
+
+```
+var query = {name: {$ne: /vinho/i}}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+error: {
+  "$err": "invalid regular expression operator",
+  "code": 13454
+}
+suissacorp(mongod-2.4.8) workshop-online-novembro> var query = {name: {$ne: 'Vinho'}}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+
+```
