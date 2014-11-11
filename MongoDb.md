@@ -155,7 +155,7 @@ cd /Pasta_do_MongoDb/bin
 Para criar uma database usamos o comando `use` que cria uma database nova ou usa um já existente.
 
 ```
-use workshop-be-mean
+use be-mean
 ```
 
 Após criamos a database vamos listá-la:
@@ -192,7 +192,7 @@ Quando usamos o comando `use` ele muda nossa database e aponta ela para a variá
 
 ```
 db
-workshop-be-mean
+be-mean
 
 ```
 *Dica: instale o mongo-hacker, ver no github, manualmente*
@@ -222,18 +222,18 @@ Para apagarmos os dados dessa coleção de teste possuímos 2 comandos: `remove`
 O `remove` apenas apaga os dados, porém a coleção continua existindo, já com o `drop` ele apaga a coleção inteira, como podemos ver abaixo:
 
 ```
-suissacorp(mongod-2.4.8) workshop-be-mean> db.teste.remove({})
+suissacorp(mongod-2.4.8) be-mean> db.teste.remove({})
 Removed 2 record(s) in 1ms
-suissacorp(mongod-2.4.8) workshop-be-mean> db.teste.find()
+suissacorp(mongod-2.4.8) be-mean> db.teste.find()
 Fetched 0 record(s) in 0ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> show collections
+suissacorp(mongod-2.4.8) be-mean> show collections
 system.indexes
 teste
-suissacorp(mongod-2.4.8) workshop-be-mean> db.teste.drop()
+suissacorp(mongod-2.4.8) be-mean> db.teste.drop()
 true
-suissacorp(mongod-2.4.8) workshop-be-mean> show collections
+suissacorp(mongod-2.4.8) be-mean> show collections
 system.indexes
-suissacorp(mongod-2.4.8) workshop-be-mean> 
+suissacorp(mongod-2.4.8) be-mean> 
 
 ```
 
@@ -248,15 +248,15 @@ Para inserir um objeto no MongoDb podemos criá-lo em uma variável e depois pas
 
 ```
 var product = {"name":"Cachaça","description":"Mé brasileiro","price":12.00 }
-suissacorp(mongod-2.4.8) workshop-be-mean> product
+suissacorp(mongod-2.4.8) be-mean> product
 {
   "name": "Cachaça",
   "description": "Mé brasileiro",
   "price": 12
 }
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.insert(product)
+suissacorp(mongod-2.4.8) be-mean> db.products.insert(product)
 Inserted 1 record(s) in 2ms
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
+suissacorp(mongod-2.4.8) be-mean> db.products.find()
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -270,7 +270,7 @@ Para inserir diversos registros de uma só vez podemos criar um array com nossos
 
 ```
 var ps = [{"name":"Pinga","description":"da braba po tubão","price": 4.50},{"name":"Uísque","description":"Pra preiboi toma com energético","price":80.00},{"name":"Champagne","description":"só podia ser saopaulino","price":130.00 }]
-suissacorp(mongod-2.4.8) workshop-be-mean> ps
+suissacorp(mongod-2.4.8) be-mean> ps
 [
   {
     "name": "Pinga",
@@ -293,7 +293,7 @@ suissacorp(mongod-2.4.8) workshop-be-mean> ps
 
 
 ```
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
+suissacorp(mongod-2.4.8) be-mean> db.products.find()
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -333,9 +333,9 @@ Nós também podemos inserir objetos utilizando o `save`, ele tanto insere como 
 
 ```
 var p = {name: 'Vinho', price: 23, description: 'Suco de uva alcoolico'}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.save(p)
+suissacorp(mongod-2.4.8) be-mean> db.products.save(p)
 Inserted 1 record(s) in 0ms
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
+suissacorp(mongod-2.4.8) be-mean> db.products.find()
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -378,8 +378,8 @@ Veja a diferença de retorno das duas funções:
 
 ```
 var query = {name: 'Vinho'}
-suissacorp(mongod-2.4.8) workshop-be-mean> var p = db.products.find(query)
-suissacorp(mongod-2.4.8) workshop-be-mean> p
+suissacorp(mongod-2.4.8) be-mean> var p = db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> p
 {
   "_id": ObjectId("546157b75b9f2b586cb31d0c"),
   "name": "Vinho",
@@ -387,7 +387,7 @@ suissacorp(mongod-2.4.8) workshop-be-mean> p
   "description": "Suco de uva alcoolico"
 }
 Fetched 1 record(s) in 1ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> p.price
+suissacorp(mongod-2.4.8) be-mean> p.price
 ```
 
 Não conseguimos acessar diretamente nosso objeto pois ele é retornado na forma de [cursor](http://docs.mongodb.org/manual/core/cursors/) que possui métodos especiais para acessar seus valores, [como visto aqui](http://docs.mongodb.org/manual/tutorial/iterate-a-cursor/).
@@ -396,20 +396,20 @@ Então precisamos utilizar o `findOne` pois ele retorna um objeto comum.
 
 ```
 var p = db.products.findOne(query)
-suissacorp(mongod-2.4.8) workshop-be-mean> p
+suissacorp(mongod-2.4.8) be-mean> p
 {
   "_id": ObjectId("546157b75b9f2b586cb31d0c"),
   "name": "Vinho",
   "price": 12,
   "description": "Suco de uva alcoolico"
 }
-suissacorp(mongod-2.4.8) workshop-be-mean> p.price
+suissacorp(mongod-2.4.8) be-mean> p.price
 12
-suissacorp(mongod-2.4.8) workshop-be-mean> p.price = 23
+suissacorp(mongod-2.4.8) be-mean> p.price = 23
 23
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.save(p)
+suissacorp(mongod-2.4.8) be-mean> db.products.save(p)
 Updated 1 existing record(s) in 1ms
-suissacorp(mongod-2.4.8) workshop-be-mean> 
+suissacorp(mongod-2.4.8) be-mean> 
 
 ```
 
@@ -418,18 +418,18 @@ Voltando na alteração com `save` vamos buscar nosso objeto a ser modificado e 
 
 ```
 var p = db.products.findOne()
-suissacorp(mongod-2.4.8) workshop-be-mean> p
+suissacorp(mongod-2.4.8) be-mean> p
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
   "description": "Mé brasileiro",
   "price": 23
 }
-suissacorp(mongod-2.4.8) workshop-be-mean> p.price
+suissacorp(mongod-2.4.8) be-mean> p.price
 23
-suissacorp(mongod-2.4.8) workshop-be-mean> p.price = 12
+suissacorp(mongod-2.4.8) be-mean> p.price = 12
 12
-suissacorp(mongod-2.4.8) workshop-be-mean> p
+suissacorp(mongod-2.4.8) be-mean> p
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -444,7 +444,7 @@ Depois salvamos o objeto modificado:
 ```
 db.products.save(p)
 Updated 1 existing record(s) in 50ms
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find({name: 'Cachaça'})
+suissacorp(mongod-2.4.8) be-mean> db.products.find({name: 'Cachaça'})
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -460,7 +460,7 @@ Fetched 1 record(s) in 1ms -- Index[none]
 
 ```
 var query = {name: 'Vinho'}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("546157b75b9f2b586cb31d0c"),
   "name": "Vinho",
@@ -468,8 +468,8 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
   "description": "Suco de uva alcoolico"
 }
 Fetched 1 record(s) in 1ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> var query = {name: 'vinho'}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> var query = {name: 'vinho'}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 Fetched 0 record(s) in 0ms -- Index[none]
 ```
 
@@ -483,7 +483,7 @@ var query = {name: /vinho/i}
 
 ```
 var query = {name: /vinho/i}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("546157b75b9f2b586cb31d0c"),
   "name": "Vinho",
@@ -501,14 +501,14 @@ Para limitarmos quais campos queremos trazer, passamos um objeto com o nome dos 
 
 ```
 var fields = {name: 1}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query, fields)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query, fields)
 {
   "_id": ObjectId("546157b75b9f2b586cb31d0c"),
   "name": "Vinho"
 }
 Fetched 1 record(s) in 43ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> var fields = {name: 1, _id: 0}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query, fields)
+suissacorp(mongod-2.4.8) be-mean> var fields = {name: 1, _id: 0}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query, fields)
 {
   "name": "Vinho"
 }
@@ -539,7 +539,7 @@ Retorna objetos com valores maiores ou igual que value
 
 ```
 var query = {price: {$lt: 12}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
   "name": "Pinga",
@@ -547,8 +547,8 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
   "price": 4.5
 }
 Fetched 1 record(s) in 1ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> var query = {price: {$lte: 12}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> var query = {price: {$lte: 12}}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
   "name": "Pinga",
@@ -570,7 +570,7 @@ Fetched 2 record(s) in 1ms -- Index[none]
 
 ```
 var query = {price: {$gt: 12}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -590,8 +590,8 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
   "price": 130
 }
 Fetched 3 record(s) in 2ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> var query = {price: {$gte: 12}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> var query = {price: {$gte: 12}}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -626,7 +626,7 @@ Fetched 4 record(s) in 1ms -- Index[none]
 
 ```
 var query = {$or: [{name: /vinho/i},{price: {$gte: 40}}]}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
   "name": "Uísque",
@@ -653,7 +653,7 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 
 ```
 var query = {$nor: [{name: /vinho/i},{price: {$gte: 40}}]}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -675,7 +675,7 @@ Para buscarmos uma faixa específica de preços podemos fazer a seguinte query:
 //maior ou igual que 12 E menor que 80
 
 var query = {$and: [{price: {$lt: 80}},{price: {$gte: 12}}]}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -698,13 +698,13 @@ Não aceita REGEX.
 
 ```
 var query = {name: {$ne: /vinho/i}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 error: {
   "$err": "invalid regular expression operator",
   "code": 13454
 }
-suissacorp(mongod-2.4.8) workshop-be-mean> var query = {name: {$ne: 'Vinho'}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> var query = {name: {$ne: 'Vinho'}}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -722,21 +722,21 @@ Para isso vamos adicionar um `Array` de tags em um objeto utilizando a técnica 
 
 ```
 var p = db.products.findOne()
-suissacorp(mongod-2.4.8) workshop-be-mean> p
+suissacorp(mongod-2.4.8) be-mean> p
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
   "description": "Mé brasileiro",
   "price": 23
 }
-suissacorp(mongod-2.4.8) workshop-be-mean> p.tags = ['branquinha', 'marvada']
+suissacorp(mongod-2.4.8) be-mean> p.tags = ['branquinha', 'marvada']
 [
   "branquinha",
   "marvada"
 ]
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.save(p)
+suissacorp(mongod-2.4.8) be-mean> db.products.save(p)
 Updated 1 existing record(s) in 2ms
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.findOne({name: 'Cachaça'})
+suissacorp(mongod-2.4.8) be-mean> db.products.findOne({name: 'Cachaça'})
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -768,8 +768,8 @@ db.products.find(query)
   ]
 }
 Fetched 1 record(s) in 1ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> var query = {tags: {$in: ['branquinha', 'asduihasuihduia']}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> var query = {tags: {$in: ['branquinha', 'asduihasuihduia']}}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -789,7 +789,7 @@ Retorna todos os objetos que não possuem aqueles valores do `Array`.
 
 ```
 var query = {tags: {$nin: ['branquinha']}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
   "name": "Pinga",
@@ -825,7 +825,7 @@ Retorna todos os objetos que possuem todos os valores buscados, se um não valid
 
 ```
 var query = {tags: {$all: ['branquinha', 'marvada']}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -837,8 +837,8 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
   ]
 }
 Fetched 1 record(s) in 0ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-be-mean> var query = {tags: {$all: ['branquinha', 'BAZINGA']}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> var query = {tags: {$all: ['branquinha', 'BAZINGA']}}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 Fetched 0 record(s) in 1ms -- Index[none]
 
 ```
@@ -852,7 +852,7 @@ Por exemplo em um blog onde você está servindo um JSON para montar uma nuvem d
 
 ```
 var query = {tags: {$exists: 1}}
-suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -867,4 +867,28 @@ Fetched 1 record(s) in 1ms -- Index[none]
 
 ```
 
+
+**$size - Tamanho**
+
+Retorna os objetos que possuem o tamanho exato do *Array* buscado.
+
+```
+var query = {tags: {$size: 2}}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23,
+  "tags": [
+    "branquinha",
+    "marvada"
+  ]
+}
+Fetched 1 record(s) in 2ms -- Index[none]
+suissacorp(mongod-2.4.8) be-mean> var query = {tags: {$size: 1}}
+suissacorp(mongod-2.4.8) be-mean> db.products.find(query)
+Fetched 0 record(s) in 1ms -- Index[none]
+
+```
 
