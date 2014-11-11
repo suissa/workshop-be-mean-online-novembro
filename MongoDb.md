@@ -789,7 +789,7 @@ Retorna todos os objetos que não possuem aqueles valores do `Array`.
 
 ```
 var query = {tags: {$nin: ['branquinha']}}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
   "name": "Pinga",
@@ -819,7 +819,52 @@ Fetched 4 record(s) in 2ms -- Index[none]
 ```
 
 
+**all - Todos**
+
+Retorna todos os objetos que possuem todos os valores buscados, se um não validar a busca ele não retorna o objeto.
+
+```
+var query = {tags: {$all: ['branquinha', 'marvada']}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23,
+  "tags": [
+    "branquinha",
+    "marvada"
+  ]
+}
+Fetched 1 record(s) in 0ms -- Index[none]
+suissacorp(mongod-2.4.8) workshop-be-mean> var query = {tags: {$all: ['branquinha', 'BAZINGA']}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+Fetched 0 record(s) in 1ms -- Index[none]
+
+```
 
 
+**$exists - Existe**
+
+Retorna os objetos que possuem aquele campo. Muito útil em um sistema **Schemaless** e principalmente nesse exemplo com **tags**.
+
+Por exemplo em um blog onde você está servindo um JSON para montar uma nuvem de tags, com esse operador você irá retornar apenas os objetos que possuam tags, eliminando uma verificação adicional.
+
+```
+var query = {tags: {$exists: 1}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23,
+  "tags": [
+    "branquinha",
+    "marvada"
+  ]
+}
+Fetched 1 record(s) in 1ms -- Index[none]
+
+```
 
 
