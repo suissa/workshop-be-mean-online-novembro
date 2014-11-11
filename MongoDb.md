@@ -367,9 +367,57 @@ suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
   "description": "Suco de uva alcoolico"
 }
 Fetched 5 record(s) in 1ms -- Index[none]
+```
 
+
+Para alterarmos um valor com save precisamos inicialmente buscar o objeto desejado com `findOne`, pois ele me retorna apenas o primeiro objeto achado. Caso eu usasse o `find`, mesmo retornando **um** objeto, ainda seria dentro de um *Array*.
+
+Por isso usamos o `find` para listagem de registros e o `findOne` para consulta de registros.
+
+Então vamos buscar nosso objeto a ser modificado e modificar seu valor:
 
 ```
+var p = db.products.findOne()
+suissacorp(mongod-2.4.8) workshop-online-novembro> p
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 12
+}
+suissacorp(mongod-2.4.8) workshop-online-novembro> p.price
+12
+suissacorp(mongod-2.4.8) workshop-online-novembro> p.price = 23
+23
+suissacorp(mongod-2.4.8) workshop-online-novembro> p
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+```
+
+
+Depois salvamos o objeto modificado:
+
+```
+db.products.save(p)
+Updated 1 existing record(s) in 50ms
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find({name: 'Cachaça'})
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+Fetched 1 record(s) in 1ms -- Index[none]
+
+```
+
+
+
+
 
 
 
