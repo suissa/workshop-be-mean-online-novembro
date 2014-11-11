@@ -494,6 +494,7 @@ Fetched 1 record(s) in 1ms -- Index[none]
 
 ```
 
+*Nota: caso você não passe uma query para o `findOne` ele irá retornar o primeiro registro inserido.*
 
 Para limitarmos quais campos queremos trazer, passamos um objeto com o nome dos campos a serem retornados, no segundo parâmetro das funções `find` e `findOne`, é a mesma função do `SELECT` da SQL.
 
