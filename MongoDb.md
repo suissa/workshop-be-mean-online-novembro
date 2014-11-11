@@ -570,7 +570,7 @@ Fetched 2 record(s) in 1ms -- Index[none]
 
 ```
 var query = {price: {$gt: 12}}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -590,8 +590,8 @@ suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
   "price": 130
 }
 Fetched 3 record(s) in 2ms -- Index[none]
-suissacorp(mongod-2.4.8) workshop-online-novembro> var query = {price: {$gte: 12}}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> var query = {price: {$gte: 12}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -626,7 +626,7 @@ Fetched 4 record(s) in 1ms -- Index[none]
 
 ```
 var query = {$or: [{name: /vinho/i},{price: {$gte: 40}}]}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
   "name": "Uísque",
@@ -653,7 +653,7 @@ suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
 
 ```
 var query = {$nor: [{name: /vinho/i},{price: {$gte: 40}}]}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -675,7 +675,7 @@ Para buscarmos uma faixa específica de preços podemos fazer a seguinte query:
 //maior ou igual que 12 E menor que 80
 
 var query = {$and: [{price: {$lt: 80}},{price: {$gte: 12}}]}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -698,13 +698,13 @@ Não aceita REGEX.
 
 ```
 var query = {name: {$ne: /vinho/i}}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 error: {
   "$err": "invalid regular expression operator",
   "code": 13454
 }
-suissacorp(mongod-2.4.8) workshop-online-novembro> var query = {name: {$ne: 'Vinho'}}
-suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+suissacorp(mongod-2.4.8) workshop-be-mean> var query = {name: {$ne: 'Vinho'}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
 {
   "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
   "name": "Cachaça",
@@ -713,3 +713,76 @@ suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
 }
 
 ```
+
+###Busca em Arrays
+
+**$in e $nin - In e Not In**
+
+Para isso vamos adicionar um `Array` de tags em um objeto utilizando a técnica do `finOne` e `save`.
+
+```
+var p = db.products.findOne()
+suissacorp(mongod-2.4.8) workshop-be-mean> p
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+suissacorp(mongod-2.4.8) workshop-be-mean> p.tags = ['branquinha', 'marvada']
+[
+  "branquinha",
+  "marvada"
+]
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.save(p)
+Updated 1 existing record(s) in 2ms
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.findOne({name: 'Cachaça'})
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23,
+  "tags": [
+    "branquinha",
+    "marvada"
+  ]
+}
+
+```
+
+
+
+```
+db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23,
+  "tags": [
+    "branquinha",
+    "marvada"
+  ]
+}
+Fetched 1 record(s) in 1ms -- Index[none]
+suissacorp(mongod-2.4.8) workshop-be-mean> var query = {tags: {$in: ['branquinha', 'asduihasuihduia']}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23,
+  "tags": [
+    "branquinha",
+    "marvada"
+  ]
+}
+Fetched 1 record(s) in 0ms -- Index[none]
+```
+
+
+
+
+
+
+
