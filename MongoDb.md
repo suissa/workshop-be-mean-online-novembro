@@ -517,9 +517,107 @@ Fetched 1 record(s) in 1ms -- Index[none]
 ```
 
 
+###Operadores Aritiméticos
+
+Utilizamos esses operadores especiais como operadores de busca, já que não temos uma linguagem de query como a SQL e sim objetos JSON, para isso foi criado esse formato de query.
+
+```
+< ou $lt
+db.collection.find({ "campo" : { $lt: value } } ); Retorna objetos com valores menores que value.
+<= ou $lte
+db.collection.find({ "campo" : { $lte: value } } );
+Retorna objetos com valores menores ou igual que value.
+> ou $gt
+db.collection.find({ "campo" : { $gt: value } } ); Retorna objetos com valores maiores que value.
+>= ou $gte
+db.collection.find({ "campo" : { $gte: value } } );
+Retorna objetos com valores maiores ou igual que value
+```
 
 
+$lt e $lte - Menor que e Menor ou igual que
+
+```
+var query = {price: {$lt: 12}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
+  "name": "Pinga",
+  "description": "da braba po tubão",
+  "price": 4.5
+}
+Fetched 1 record(s) in 1ms -- Index[none]
+suissacorp(mongod-2.4.8) workshop-be-mean> var query = {price: {$lte: 12}}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find(query)
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
+  "name": "Pinga",
+  "description": "da braba po tubão",
+  "price": 4.5
+}
+{
+  "_id": ObjectId("546157b75b9f2b586cb31d0c"),
+  "name": "Vinho",
+  "price": 12,
+  "description": "Suco de uva alcoolico"
+}
+Fetched 2 record(s) in 1ms -- Index[none]
+
+```
 
 
+$gt e $gte - Maior que e Maior ou igual que
+
+```
+var query = {price: {$gt: 12}}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
+  "name": "Uísque",
+  "description": "Pra preiboi toma com energético",
+  "price": 80
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0b"),
+  "name": "Champagne",
+  "description": "só podia ser saopaulino",
+  "price": 130
+}
+Fetched 3 record(s) in 2ms -- Index[none]
+suissacorp(mongod-2.4.8) workshop-online-novembro> var query = {price: {$gte: 12}}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 23
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
+  "name": "Uísque",
+  "description": "Pra preiboi toma com energético",
+  "price": 80
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0b"),
+  "name": "Champagne",
+  "description": "só podia ser saopaulino",
+  "price": 130
+}
+{
+  "_id": ObjectId("546157b75b9f2b586cb31d0c"),
+  "name": "Vinho",
+  "price": 12,
+  "description": "Suco de uva alcoolico"
+}
+Fetched 4 record(s) in 1ms -- Index[none]
+
+```
 
 
