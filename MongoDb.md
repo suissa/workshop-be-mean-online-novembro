@@ -329,6 +329,47 @@ find().pretty()
 ```
 
 
+Nós também podemos inserir objetos utilizando o `save`, ele tanto insere como altera valores.
+
+```
+var p = {name: 'Vinho', price: 23, description: 'Suco de uva alcoolico'}
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.save(p)
+Inserted 1 record(s) in 0ms
+suissacorp(mongod-2.4.8) workshop-be-mean> db.products.find()
+{
+  "_id": ObjectId("54614a0a5b9f2b586cb31d08"),
+  "name": "Cachaça",
+  "description": "Mé brasileiro",
+  "price": 12
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d09"),
+  "name": "Pinga",
+  "description": "da braba po tubão",
+  "price": 4.5
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
+  "name": "Uísque",
+  "description": "Pra preiboi toma com energético",
+  "price": 80
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0b"),
+  "name": "Champagne",
+  "description": "só podia ser saopaulino",
+  "price": 130
+}
+{
+  "_id": ObjectId("546157b75b9f2b586cb31d0c"),
+  "name": "Vinho",
+  "price": 23,
+  "description": "Suco de uva alcoolico"
+}
+Fetched 5 record(s) in 1ms -- Index[none]
+
+
+```
 
 
 
