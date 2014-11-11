@@ -535,7 +535,7 @@ Retorna objetos com valores maiores ou igual que value
 ```
 
 
-$lt e $lte - Menor que e Menor ou igual que
+**$lt e $lte - Menor que e Menor ou igual que**
 
 ```
 var query = {price: {$lt: 12}}
@@ -566,7 +566,7 @@ Fetched 2 record(s) in 1ms -- Index[none]
 ```
 
 
-$gt e $gte - Maior que e Maior ou igual que
+**$gt e $gte - Maior que e Maior ou igual que**
 
 ```
 var query = {price: {$gt: 12}}
@@ -620,4 +620,30 @@ Fetched 4 record(s) in 1ms -- Index[none]
 
 ```
 
+###Operadores Lógicos
 
+**$or - OU**
+
+```
+var query = {$or: [{name: /vinho/i},{price: {$gte: 40}}]}
+suissacorp(mongod-2.4.8) workshop-online-novembro> db.products.find(query)
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0a"),
+  "name": "Uísque",
+  "description": "Pra preiboi toma com energético",
+  "price": 80
+}
+{
+  "_id": ObjectId("54614d5c5b9f2b586cb31d0b"),
+  "name": "Champagne",
+  "description": "só podia ser saopaulino",
+  "price": 130
+}
+{
+  "_id": ObjectId("546157b75b9f2b586cb31d0c"),
+  "name": "Vinho",
+  "price": 12,
+  "description": "Suco de uva alcoolico"
+}
+
+```
