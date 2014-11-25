@@ -38,32 +38,39 @@ http.createServer(function (req, res) {
   console.log('URL: ', req.url);
   var route = req.url;
 
-  if (route === '/beer/create') {
-    var dados = {
-      name: 'Skol',
-      description: 'Mijo de rato',
-      alcohol: 4.5,
-      price: 3.0,
-      category: 'pilsen'
-    }
-
-    var model = new Beer(dados)
-      , msg = '';
-
-    model.save(function (err, data) {
-      if (err){
-        console.log('Erro: ', err);
-        msg = 'Erro: ' + err;
+  switch (route) {
+    case '/beer/create':
+      var dados = {
+        name: 'Skol',
+        description: 'Mijo de rato',
+        alcohol: 4.5,
+        price: 3.0,
+        category: 'pilsen'
       }
-      else{
-        console.log('Cerveja Inserida: ', data);
-        msg = 'Cerveja Inserida: ' + JSON.stringify(data);
-      }
-      res.end(msg);
-    });
-  } else {
-    res.end('ROTA NAO ENCONTRADA!');
-  }
+
+      var model = new Beer(dados)
+        , msg = '';
+
+      model.save(function (err, data) {
+        if (err){
+          console.log('Erro: ', err);
+          msg = 'Erro: ' + err;
+        }
+        else{
+          console.log('Cerveja Inserida: ', data);
+          msg = 'Cerveja Inserida: ' + JSON.stringify(data);
+        }
+        res.end(msg);
+      });
+    break;
+    case '/beer/retrieve':
+    break;
+    case '/beer/update':
+    break;
+    case '/beer/delete':
+    break;
+    default: res.end('ROTA NAO ENCONTRADA!');
+  };
 
 }).listen(3000);
 console.log('Server running at http://localhost:3000/');
