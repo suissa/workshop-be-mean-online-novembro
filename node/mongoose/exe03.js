@@ -29,11 +29,11 @@ var BeerSchema = new Schema({
 var Beer = mongoose.model('Beer', BeerSchema);
 
 var dados = {
-  name: 'Heineken',
-  description: 'Até q eh boazinha',
-  alcohol: 5.5,
-  price: 3.5,
-  category: 'lager'
+  name: 'Skol',
+  description: 'Mijo de rato',
+  alcohol: 4.5,
+  price: 3.0,
+  category: 'pilsen'
 }
 
 var model = new Beer(dados);

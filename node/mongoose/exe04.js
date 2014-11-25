@@ -5,8 +5,14 @@ var db = mongoose.connection;
 db.on('error', function(err){
     console.log('Erro de conexao.', err)
 });
-db.once('open', function () {
+db.on('open', function () {
   console.log('Conexão aberta.')
+});
+db.on('connected', function(err){
+    console.log('Conectado')
+});
+db.on('disconnected', function(err){
+    console.log('Desconectado')
 });
 
 var Schema = mongoose.Schema;
@@ -19,12 +25,13 @@ var BeerSchema = new Schema({
   created: { type: Date, default: Date.now },
 });
 
-var Beer = mongoose.model('Beer', BeerSchema);
+var Beer = mongoose.model('Beer', BeerSchema)
+  , query = {};
 
-Beer.find({}, function (err, data) {
-  if (err){
+Beer.find(query, function (err, data) {
+  if (err) {
     console.log('Erro: ', err);
-  }else{
+  } else {
     console.log('Listagem: ', data);
   }
   // para finalizar o processo do Node.js
