@@ -1066,6 +1066,7 @@ require('fs').readdirSync(MODELS_FOLDER).forEach(function(file) {
 
 ```
 
+Esse arquivo apenas lê os arquivos da pasta `models` e da um require para que não precisemos fazer isso nos *Controllers* que os forem usar.
 
 Agora no nosso *Controller* precisamos mudar a chamada do *Model* para:
 
