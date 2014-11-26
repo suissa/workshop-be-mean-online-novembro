@@ -36,7 +36,8 @@ http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
 
   console.log('URL: ', req.url);
-  var route = req.url;
+  var route = req.url
+    , msg = '';
 
   switch (route) {
     case '/beer/create':
@@ -48,8 +49,7 @@ http.createServer(function (req, res) {
         category: 'pilsen'
       }
 
-      var model = new Beer(dados)
-        , msg = '';
+      var model = new Beer(dados);
 
       model.save(function (err, data) {
         if (err){
@@ -58,16 +58,62 @@ http.createServer(function (req, res) {
         }
         else{
           console.log('Cerveja Inserida: ', data);
-          msg = 'Cerveja Inserida: ' + JSON.stringify(data);
+          msg = 'Cerveja inserida: ' + JSON.stringify(data);
         }
         res.end(msg);
       });
     break;
     case '/beer/retrieve':
+      Beer.find(query, function (err, data) {
+      if (err) {
+        console.log('Erro: ', err);
+          msg = 'Erro: ' + err;
+      } else {
+        console.log('Listagem: ', data);
+          msg = 'Cervejas listadas: ' + JSON.stringify(data);
+      }
+      res.end(msg);
+    });
+
     break;
     case '/beer/update':
+      var query = {name: /skol/i};
+
+      var mod = {
+        alcohol: 666,
+      };
+
+      var optional = {
+        upsert: false,
+        multi: true
+      };
+
+      Beer.update(query, mod, optional, function (err, data) {
+        if (err){
+          console.log('Erro: ', err);
+          msg = 'Erro: ' + err;
+        }
+        else{
+          console.log('Cervejas atualizadas com sucesso: ', data);
+          msg = 'Cervejas alteradas: ' + data;
+        }
+        res.end(msg);
+      });
     break;
     case '/beer/delete':
+      var query = {name: /skol/i};
+
+      // É multi: true CUIDADO!
+      Beer.remove(query, function(err, data) {
+        if(err) {
+          console.log(err);
+          msg = 'Erro: ' + err;
+        } else {
+          console.log('Cerveja deletada com sucesso, quantidade: ', data);
+          msg = 'Cervejas deletadas: ' + data;
+        }
+        res.end(msg);
+      });
     break;
     default: res.end('ROTA NAO ENCONTRADA!');
   };
