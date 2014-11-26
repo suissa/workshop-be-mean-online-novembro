@@ -1,3 +1,5 @@
+node_modules/
 node/file.zip
 node/mongoose/node_modules
 node/rotas/node_modules
+node/express/node_modules
