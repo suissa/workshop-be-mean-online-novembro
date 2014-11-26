@@ -28,19 +28,10 @@ var BeerSchema = new Schema({
   created_at: { type: Date, default: Date.now }
 });
 
-var Beer = mongoose.model('Beer', BeerSchema);
+var Beer = mongoose.model('Beer', BeerSchema)
+  , _beer = {
+    create: function (req, res) {
 
-
-
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
-
-  console.log('URL: ', req.url);
-  var route = req.url
-    , msg = '';
-
-  switch (route) {
-    case '/beer/create':
       var dados = {
         name: 'Skol',
         description: 'Mijo de rato',
@@ -62,31 +53,33 @@ http.createServer(function (req, res) {
         }
         res.end(msg);
       });
-    break;
-    case '/beer/retrieve':
+    }
+    , retrieve: function (req, res) {
+
+      var query = {};
+
       Beer.find(query, function (err, data) {
-      if (err) {
-        console.log('Erro: ', err);
-          msg = 'Erro: ' + err;
-      } else {
-        console.log('Listagem: ', data);
-          msg = 'Cervejas listadas: ' + JSON.stringify(data);
-      }
-      res.end(msg);
-    });
+        if (err) {
+          console.log('Erro: ', err);
+            msg = 'Erro: ' + err;
+        } else {
+          console.log('Listagem: ', data);
+            msg = 'Cervejas listadas: ' + JSON.stringify(data);
+        }
+        res.end(msg);
+      });
 
-    break;
-    case '/beer/update':
-      var query = {name: /skol/i};
+    }
+    , update: function (req, res) {
 
-      var mod = {
-        alcohol: 666,
-      };
-
-      var optional = {
-        upsert: false,
-        multi: true
-      };
+      var query = {name: /skol/i}
+        , mod = {
+          alcohol: 666,
+        }
+        , optional = {
+          upsert: false,
+          multi: true
+        };
 
       Beer.update(query, mod, optional, function (err, data) {
         if (err){
@@ -99,8 +92,9 @@ http.createServer(function (req, res) {
         }
         res.end(msg);
       });
-    break;
-    case '/beer/delete':
+    }
+    , delete: function (req, res) {
+
       var query = {name: /skol/i};
 
       // É multi: true CUIDADO!
@@ -114,6 +108,30 @@ http.createServer(function (req, res) {
         }
         res.end(msg);
       });
+    }
+  };
+
+
+
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html;charset=utf-8'});
+
+  console.log('URL: ', req.url);
+  var route = req.url
+    , msg = '';
+
+  switch (route) {
+    case '/beer/create':
+      _beer.create(req, res);
+    break;
+    case '/beer/retrieve':
+      _beer.retrieve(req, res);
+    break;
+    case '/beer/update':
+      _beer.update(req, res);
+    break;
+    case '/beer/delete':
+      _beer.delete(req, res);
     break;
     default: res.end('ROTA NAO ENCONTRADA!');
   };
