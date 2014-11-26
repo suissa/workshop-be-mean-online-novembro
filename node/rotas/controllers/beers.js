@@ -1,4 +1,5 @@
-var Beer = require('../models/beer');
+var Beer = require('../models/beer')
+  , msg = '';
 
 module.exports = {
   create: function (req, res) {
