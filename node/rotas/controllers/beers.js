@@ -1,4 +1,5 @@
-var Beer = require('../models/beer')
+var mongoose = require('mongoose')
+  , Beer = mongoose.model('Beer')
   , msg = '';
 
 module.exports = {

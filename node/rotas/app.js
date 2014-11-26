@@ -1,5 +1,7 @@
 var http = require('http')
-  , Beer = require('./controllers/beers');
+  , db = require('./config/db')
+  , Beer = require('./controllers/beers')
+  ;
 
 
 http.createServer(function (req, res) {
@@ -7,7 +9,8 @@ http.createServer(function (req, res) {
 
   console.log('URL: ', req.url);
   var route = req.url
-    , msg = '';
+    , msg = ''
+    ;
 
   switch (route) {
     case '/beer/create':

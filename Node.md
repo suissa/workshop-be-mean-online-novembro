@@ -1017,5 +1017,74 @@ console.log('Server running at http://localhost:3000/');
 
 ```
 
+Mas nosso código ainda pode melhorar, vamos separar a conexão do MongoDb do *Model*, para isso vamos retirar todo o código da conexão e salvar em `config/db`:
+```
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/workshop-online-novembro-2014');
+
+var db = mongoose.connection;
+db.on('error', function(err){
+    console.log('Erro de conexao.', err)
+});
+db.on('open', function () {
+  console.log('Conexão aberta.')
+});
+db.on('connected', function(err){
+    console.log('Conectado')
+});
+db.on('disconnected', function(err){
+    console.log('Desconectado')
+});
+
+// If the Node process ends, close the Mongoose connection
+process.on('SIGINT', function() {
+  mongoose.connection.close(function () {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
+
+require('../models/index');
+```
+
+
+Note a última linha onde eu chamo `require('../models/index');`, para que serve isso?
+
+Ai que está a jogada, para centralizarmos a conexão também centralizaremos a importação dos *Models* para o projeto, chamando esse `models/index.js`.
+
+```
+// index.js
+var MODELS_FOLDER = './models';
+require('fs').readdirSync(MODELS_FOLDER).forEach(function(file) {
+  // Remove index from models
+  if(file !== 'index.js'){
+    require('./'+file);
+    console.log('Addd model: ', file);
+  }
+});
+
+```
+
+
+Agora no nosso *Controller* precisamos mudar a chamada do *Model* para:
+
+```
+var mongoose = require('mongoose')
+  , Beer = mongoose.model('Beer')
+  , msg = '';
+```
+
+E no `app.js` ficará:
+
+```
+var http = require('http')
+  , db = require('./config/db')
+  , Beer = require('./controllers/beers')
+  ;
+```
+
+O *require* do `config/db` vem antes do *Controller* para que os *Models* ja estejam importados, em cache, para que possamos apenas chamá-lo.
+
 
 
