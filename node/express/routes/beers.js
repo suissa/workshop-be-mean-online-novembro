@@ -3,9 +3,8 @@ var express = require('express')
   , Controller = require('../controllers/beers')
   ;
 
-/* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', { title: 'Workshop Be MEAN' });
+  Controller.retrieve(req, res);
 });
 
 module.exports = router;

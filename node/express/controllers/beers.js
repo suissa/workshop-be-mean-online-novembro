@@ -34,10 +34,10 @@ module.exports = {
     Beer.find(query, function (err, data) {
       if (err) {
         console.log('Erro: ', err);
-          msg = 'Erro: ' + err;
+        msg = 'Erro: ' + err;
       } else {
         console.log('Listagem: ', data);
-          msg = data;
+        msg = data;
       }
       res.json(msg);
     });

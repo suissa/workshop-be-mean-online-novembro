@@ -7,6 +7,7 @@ var express = require('express')
   , db = require('./config/db')
   , routes = require('./routes/index')
   , users = require('./routes/users')
+  , beers = require('./routes/beers')
   , app = express();
 
 // view engine setup
@@ -23,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/beers', beers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
