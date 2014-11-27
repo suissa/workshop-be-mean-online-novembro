@@ -11,4 +11,8 @@ router.get('/:id', function(req, res) {
   Controller.findOne(req, res);
 });
 
+router.post('/', function(req, res) {
+  Controller.create(req, res);
+});
+
 module.exports = router;

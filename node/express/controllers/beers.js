@@ -5,15 +5,8 @@ var mongoose = require('mongoose')
 module.exports = {
   create: function (req, res) {
 
-    var dados = {
-      name: 'Skol',
-      description: 'Mijo de rato',
-      alcohol: 4.5,
-      price: 3.0,
-      category: 'pilsen'
-    }
-
-    var model = new Beer(dados);
+    var dados = req.body
+      , model = new Beer(dados);
 
     model.save(function (err, data) {
       if (err){
@@ -22,7 +15,7 @@ module.exports = {
       }
       else{
         console.log('Cerveja Inserida: ', data);
-        msg = 'Cerveja inserida: ' + JSON.stringify(data);
+        msg = data;
       }
       res.json(msg);
     });
