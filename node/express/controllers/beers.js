@@ -6,27 +6,36 @@ module.exports = {
   create: function (req, res, cb) {
 
     var dados = req.body
-      , model = new Beer(dados);
+      , model = new Beer(dados)
+        , objCB = {msgSuccess: 'Cerveja inserida: '}
+        ;
 
     model.save(function (err, data) {
-      cb(err, data, res, 'Cerveja inserida: ');
+      cb(err, data, res, objCB);
     });
   }
   , retrieve: function (req, res, cb) {
 
-    var query = {};
+    var query = {}
+      , objCB = {
+          msgSuccess: 'Cervejas listadas: ',
+          view: 'beers/list'
+        }
+      ;
 
     Beer.find(query, function (err, data) {
-      cb(err, data, res, 'Cervejas listadas: ');
+      cb(err, data, res, objCB);
     });
 
   }
   , findOne: function (req, res, cb) {
 
-    var query = {_id: req.params.id};
+    var query = {_id: req.params.id}
+      , objCB = {msgSuccess: 'Cerveja consultada: '}
+      ;
 
     Beer.findOne(query, function (err, data) {
-      cb(err, data, res, 'Cerveja consultada: ');
+      cb(err, data, res, objCB);
     });
 
   }
@@ -37,18 +46,22 @@ module.exports = {
       , optional = {
         upsert: false,
         multi: true
-      };
+      }
+      , objCB = {msgSuccess: 'Cervejas alteradas: '}
+      ;
 
     Beer.update(query, mod, function (err, data) {
-      cb(err, data, res, 'Cervejas alteradas: ');
+      cb(err, data, res, objCB);
     });
   }
   , delete: function (req, res, cb) {
 
-    var query = {_id: req.params.id};
+    var query = {_id: req.params.id}
+      , objCB = {msgSuccess: 'Cervejas deletadas: '}
+      ;
 
     Beer.remove(query, function(err, data) {
-      cb(err, data, res, 'Cervejas deletadas: ');
+      cb(err, data, res, objCB);
     });
   }
 };

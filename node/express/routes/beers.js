@@ -3,9 +3,12 @@ var express = require('express')
   , Controller = require('../controllers/beers')
   ;
 
-/* GET home page. */
+var cbView = function (err, data, res, obj){
+  res.render(obj.view, {beers: data});
+};
+
 router.get('/', function(req, res) {
-  res.render('beers/list', { title: 'Workshop Be MEAN' });
+  Controller.retrieve(req, res, cbView);
 });
 
 module.exports = router;

@@ -7,6 +7,7 @@ var express = require('express')
   , db = require('./config/db')
   , routes = require('./routes/index')
   , users = require('./routes/users')
+  , beers = require('./routes/beers')
   , api = {}
   , app = express();
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/beers', beers);
 
 // JSON API
 api.beers = require('./routes/api/beers');

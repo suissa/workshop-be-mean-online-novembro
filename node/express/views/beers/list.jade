@@ -1,4 +1,8 @@
-extends layout
+extends ../layout
 
 block content
   h1 Listagem das Cervejas
+
+  ul
+  for beer in beers
+    li #{beer.name} - #{beer.price}

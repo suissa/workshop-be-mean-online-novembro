@@ -3,17 +3,17 @@ var express = require('express')
   , Controller = require('../../controllers/beers')
   ;
 
-var cbAPIJSON = function (err, data, res, msgSuccess){
+var cbAPIJSON = function (err, data, res, obj){
   if (err){
     console.log('Erro: ', err);
     msg = 'Erro: ' + err;
   }
   else{
-    console.log(msgSuccess, data);
+    console.log(obj.msgSuccess, data);
     msg = data;
   }
   res.json(msg);
-}
+};
 
 router.get('/', function(req, res) {
   Controller.retrieve(req, res, cbAPIJSON);
