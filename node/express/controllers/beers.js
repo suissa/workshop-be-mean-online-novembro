@@ -24,6 +24,7 @@ module.exports = {
       ;
 
     Beer.find(query, function (err, data) {
+      objCB.data = {beers: data};
       cb(err, data, res, objCB);
     });
 
@@ -31,10 +32,12 @@ module.exports = {
   , findOne: function (req, res, cb) {
 
     var query = {_id: req.params.id}
-      , objCB = {msgSuccess: 'Cerveja consultada: '}
+      , objCB = {msgSuccess: 'Cerveja consultada: ',
+          view: 'beers/show'}
       ;
 
     Beer.findOne(query, function (err, data) {
+      objCB.data = {beer: data};
       cb(err, data, res, objCB);
     });
 
