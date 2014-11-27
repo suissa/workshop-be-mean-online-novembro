@@ -3,56 +3,34 @@ var mongoose = require('mongoose')
   , msg = '';
 
 module.exports = {
-  create: function (req, res) {
+  create: function (req, res, cb) {
 
     var dados = req.body
       , model = new Beer(dados);
 
     model.save(function (err, data) {
-      if (err){
-        console.log('Erro: ', err);
-        msg = 'Erro: ' + err;
-      }
-      else{
-        console.log('Cerveja Inserida: ', data);
-        msg = data;
-      }
-      res.json(msg);
+      cb(err, data, res, 'Cerveja inserida: ');
     });
   }
-  , retrieve: function (req, res) {
+  , retrieve: function (req, res, cb) {
 
     var query = {};
 
     Beer.find(query, function (err, data) {
-      if (err) {
-        console.log('Erro: ', err);
-        msg = 'Erro: ' + err;
-      } else {
-        console.log('Listagem: ', data);
-        msg = data;
-      }
-      res.json(msg);
+      cb(err, data, res, 'Cervejas listadas: ');
     });
 
   }
-  , findOne: function (req, res) {
+  , findOne: function (req, res, cb) {
 
     var query = {_id: req.params.id};
 
     Beer.findOne(query, function (err, data) {
-      if (err) {
-        console.log('Erro: ', err);
-        msg = 'Erro: ' + err;
-      } else {
-        console.log('Listagem: ', data);
-        msg = data;
-      }
-      res.json(msg);
+      cb(err, data, res, 'Cerveja consultada: ');
     });
 
   }
-  , update: function (req, res) {
+  , update: function (req, res, cb) {
 
     var query = {_id: req.params.id}
       , mod = req.body
@@ -62,30 +40,15 @@ module.exports = {
       };
 
     Beer.update(query, mod, function (err, data) {
-      if (err){
-        console.log('Erro: ', err);
-        msg = 'Erro: ' + err;
-      }
-      else{
-        console.log('Cervejas atualizadas com sucesso: ', data);
-        msg = data;
-      }
-      res.json(msg);
+      cb(err, data, res, 'Cervejas alteradas: ');
     });
   }
-  , delete: function (req, res) {
+  , delete: function (req, res, cb) {
 
     var query = {_id: req.params.id};
 
     Beer.remove(query, function(err, data) {
-      if(err) {
-        console.log(err);
-        msg = 'Erro: ' + err;
-      } else {
-        console.log('Cerveja deletada com sucesso, quantidade: ', data);
-        msg = data;
-      }
-      res.json(msg);
+      cb(err, data, res, 'Cervejas deletadas: ');
     });
   }
 };
