@@ -54,39 +54,36 @@ module.exports = {
   }
   , update: function (req, res) {
 
-    var query = {name: /skol/i}
-      , mod = {
-        alcohol: 666,
-      }
+    var query = {_id: req.params.id}
+      , mod = req.body
       , optional = {
         upsert: false,
         multi: true
       };
 
-    Beer.update(query, mod, optional, function (err, data) {
+    Beer.update(query, mod, function (err, data) {
       if (err){
         console.log('Erro: ', err);
         msg = 'Erro: ' + err;
       }
       else{
         console.log('Cervejas atualizadas com sucesso: ', data);
-        msg = 'Cervejas alteradas: ' + data;
+        msg = data;
       }
       res.json(msg);
     });
   }
   , delete: function (req, res) {
 
-    var query = {name: /skol/i};
+    var query = {_id: req.params.id};
 
-    // É multi: true CUIDADO!
     Beer.remove(query, function(err, data) {
       if(err) {
         console.log(err);
         msg = 'Erro: ' + err;
       } else {
         console.log('Cerveja deletada com sucesso, quantidade: ', data);
-        msg = 'Cervejas deletadas: ' + data;
+        msg = data;
       }
       res.json(msg);
     });

@@ -15,4 +15,12 @@ router.post('/', function(req, res) {
   Controller.create(req, res);
 });
 
+router.put('/:id', function(req, res) {
+  Controller.update(req, res);
+});
+
+router.delete('/:id', function(req, res) {
+  Controller.delete(req, res);
+});
+
 module.exports = router;
