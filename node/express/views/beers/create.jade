@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  h1 Criação de Cerveja
+
+  form(method='POST', action='/api/beers')
+    .form-group
+      label Name:
+      input.form-control(name='name', type='text')
+
+    .form-group
+      label Category:
+      input.form-control(name='category', type='text')
+
+    .form-group
+      label Price: R$
+      input.form-control(name='price', type='text')
+
+    .form-group
+      label Alcohol:
+      input.form-control(name='alcohol', type='text')
+
+    .form-group
+      label Description:
+      input.form-control(name='description', type='text')
+    .form-group
+      input(type='submit', value='Cadastrar')
+

@@ -1,0 +1,99 @@
+<!doctype html>
+<html data-ng-app="workshopBeMEAN">
+  <title>{{ workshop }}</title>
+  <body>
+
+    <p>
+      <!-- Para utilizarmos um filtro usamos o |
+          nesse caso estamos usando o filtro de upperCase
+          que apenas coloca em maiúsculo
+       -->
+      <h3>Olá mundo, {{ nome | truncate:5:'... Veja Mais' }}</h3>
+
+      <!-- Adicionamos um input para inserirmos um valor para nome
+        adicionamos o atributo nd-model para linkarmos o valor
+        na váriavel do nosso escopo local $scope.nome
+     -->
+      <label for="nome">Seu nome: 
+        <input type="text" data-ng-model="nome"> 
+      </label>
+
+      <!-- O valor em {{ nome }} é atualizado automagicamente através
+          do two-way databinding
+      -->
+      <br>
+      <label for="workshop">Idade: 
+        <input type="text" data-ng-model="idade">  {{ idade | testaMaioridade }}
+      </label>
+
+      <br>
+      <br>
+    </p>
+    <p> 
+
+      <label for="lower">Lower<input type="text" data-ng-model="lower" data-ng-init="AAAA" name="lower"> </label>
+      <br>
+      <strong>Minúsculas</strong>
+      Lowercase {{lower}}: {{ lower | lowercase }}
+    </p>
+    <p>
+        <strong>Número de casas decimais.</strong>
+        Number: {{ 1234 | number:4 }}
+    </p>
+    <p>
+        <strong>Formatação de datas com timestamp</strong>
+        Date: {{ 1395362708482 | date:'dd/MM/yyyy HH:mm:ss Z'}}
+
+    </p>
+    <p> 
+      <strong>Formatação de moeda</strong>
+        <input type="number" ng-model="amount"> <br>
+        default currency symbol (R$): <span id="currency-default">{{amount | currency}}</span><br>
+        custom currency identifier (R$): <span>{{amount | currency:"R$"}}</span>
+    </p>
+    
+
+
+    <script src="angular.min.js"></script>
+    <script>
+      angular.module('workshopBeMEAN', ['workshopFilters']);
+
+      angular.module('workshopFilters', [])
+      .filter('reverseName', function () {
+        return function (text) {
+          if(text)
+            return text.split("").reverse().join("");
+        };
+      })
+      .filter('testaMaioridade', function () {
+        return function (idade) {
+          if(idade){
+            if(idade >= 18){
+              return 'Maior de idade';
+            }
+            return 'Menor de idade';
+          }
+        };
+      })
+      .filter('truncate', function () {
+        return function (text, length, end) {
+          if(text){
+            if (isNaN(length))
+                length = 10;
+            if (end === undefined)
+                end = "...";
+            if (text.length <= length) {
+                return text;
+            }
+            else {
+                return String(text).substring(0, length) + end;
+            }
+
+          }
+        };
+      });
+
+    </script>
+  </body>
+</html>
+

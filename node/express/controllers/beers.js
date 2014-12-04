@@ -42,6 +42,19 @@ module.exports = {
     });
 
   }
+  , findOneUpdate: function (req, res, cb) {
+
+    var query = {_id: req.params.id}
+      , objCB = {msgSuccess: 'Cerveja consultada: ',
+          view: 'beers/edit'}
+      ;
+
+    Beer.findOne(query, function (err, data) {
+      objCB.data = {beer: data};
+      cb(err, data, res, objCB);
+    });
+
+  }
   , update: function (req, res, cb) {
 
     var query = {_id: req.params.id}
