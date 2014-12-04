@@ -8,7 +8,7 @@
           nesse caso estamos usando o filtro de upperCase
           que apenas coloca em maiúsculo
        -->
-      <h3>Olá mundo, {{ nome | truncate:5:'... Veja Mais' }}</h3>
+      <h3>Olá mundo, {{ nome | truncate:4:'... veja mais' }}</h3>
 
       <!-- Adicionamos um input para inserirmos um valor para nome
         adicionamos o atributo nd-model para linkarmos o valor
@@ -21,11 +21,6 @@
       <!-- O valor em {{ nome }} é atualizado automagicamente através
           do two-way databinding
       -->
-      <br>
-      <label for="workshop">Idade: 
-        <input type="text" data-ng-model="idade">  { idade | testaMaioridade }
-      </label>
-
       <br>
       <br>
     </p>

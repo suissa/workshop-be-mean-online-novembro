@@ -205,7 +205,101 @@ Todos os filtros precisam receber ao menos um parâmetro que será o valor a ser
 
 No filtro `reverseName` o texto se transforma em um `array` com `split("")` para depois ser invertido com `reverse()` e aí sim ser juntado novamente como uma `string`, pois o Javascript não possui um método nativo de inversão de strings.
 
+No exercício06 vamos ver alguns filtros simples e padrões do AngularJs:
 
+```
+<p>
+  <label>Lower<input type="text" data-ng-model="lower"> </label>
+  <br>
+  <strong>Minúsculas</strong>
+  Lowercase {{lower}}: {{ lower | lowercase }}
+</p>
+<p>
+    <strong>Número de casas decimais.</strong>
+    Number: {{ 1234 | number:2 }}
+</p>
+<p>
+    <strong>Formatação de datas com timestamp</strong>
+    Date: {{ 1402772567464 | date:'dd/MM/yyyy HH:mm:ss Z'}}
+
+</p>
+<p> 
+  <strong>Formatação de moeda</strong>
+    <input type="number" ng-model="amount"> <br>
+    default currency symbol ($): 
+      <span id="currency-default">{{amount | currency}}</span><br>
+    custom currency identifier (R$): 
+      <span>{{amount | currency:"R$"}}</span>
+</p>
+```
+
+
+##Não esquecer de falar um pouco dos filtros aqui
+
+### Filtros - Parâmetros
+
+Para utilizarmos mais de um parâmetro em um filtro precisamos apenas passar o valor após um `:` como podemos ver no exemplo do exercício07:
+
+```
+<h3>Olá mundo, {{ nome | truncate:4:'... veja mais' }}</h3>
+```
+
+Sendo que nossa função do filtro fica assim:
+
+```
+.filter('truncate', function () {
+  return function (text, length, end) {
+    if(text){
+      if (isNaN(length))
+          length = 10;
+      if (end === undefined)
+          end = "...";
+      if (text.length <= length) {
+          return text;
+      }
+      else {
+          return String(text).substring(0, length) + end;
+      }
+
+    }
+  };
+});
+```
+
+
+Perceba também que criamos um módulo para nossos filtros e apenas injetamos ele no módulo da nossa aplicação, será dessa forma que iremos modularizar nosso código no AngularJs.
+
+```
+<script>
+  angular.module('workshopBeMEAN', ['workshopFilters']);
+
+  angular.module('workshopFilters', [])
+  .filter('reverseName', function () {
+    return function (text) {
+      if(text)
+        return text.split("").reverse().join("");
+    };
+  })
+  .filter('truncate', function () {
+    return function (text, length, end) {
+      if(text){
+        if (isNaN(length))
+            length = 10;
+        if (end === undefined)
+            end = "...";
+        if (text.length <= length) {
+            return text;
+        }
+        else {
+            return String(text).substring(0, length) + end;
+        }
+
+      }
+    };
+  });
+
+</script>
+```
 
 
 
