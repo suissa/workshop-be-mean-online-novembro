@@ -96,5 +96,58 @@ Então agora eu adicionei um `input` que fará o papel do nosso `model` e adicio
 
 Logo quando eu modificar o valor do meu `model` automagicamente a `view` será atualizada. Para ver isso funcionando basta digitar qualquer coisa no input.
 
+Vamos pegar o exercício03 e salvar como exercício04 para ficar como abaixo:
+
+```
+<!doctype html>
+<html data-ng-app="workshopBeMEAN">
+  <head>
+    <title>{{ workshop }}</title>
+  </head>
+  <body>
+    <!-- Adicionamos um input para inserirmos um valor para nome
+        adicionamos o atributo nd-model para linkarmos o valor
+        na váriavel do nosso escopo local $scope.nome
+     -->
+    <label for="nome">Seu nome: 
+      <input type="text" data-ng-model="nome"> 
+    </label>
+    <!-- Utilizamos o valor de nome que está no nosso escopo local -->
+    Olá mundo, {{ nome }}
+    <!-- O valor em {{ nome }} é atualizado automagicamente através
+        do two-way databinding
+    -->
+    <label for="workshop">Workshop: 
+      <input type="text" data-ng-model="workshop"> 
+    </label>
+
+
+    <script src="angular.min.js"></script>
+    <script>
+      angular.module('workshopBeMEAN', []);
+    </script>
+  </body>
+</html>
+```
+
+Ai você me pergunta mas o que tem de mais nesse ex04?
+
+Bom primeiramente mudamos nosso `ng-app` para o `html` para que possamos ter controle das tags do AngularJs em qualquer parte do nosso documento html.
+
+Além de mudarmos o `ng-app` colocamos uma expressão de variável na tag `title` a fim de mostrar como, dependendo de onde o `ng-app` é declarado, o AngularJs consegue parsear expressões em todo o documento.
+
+Logo se você escrever qualquer valor no input do workshop você verá o título da sua página ser modificado enquanto você digita.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
