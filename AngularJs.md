@@ -139,6 +139,75 @@ Além de mudarmos o `ng-app` colocamos uma expressão de variável na tag `title
 Logo se você escrever qualquer valor no input do workshop você verá o título da sua página ser modificado enquanto você digita.
 
 
+###Filters
+
+Os filtros são funções que servem para o tratamento visual de valores na view, logo eles não modificam o valor original, modificam apenas para exibição. Um exemplo simples disso é formatar uma data a partir de um timestamp. 
+
+Vamos agora para o exercício05 onde iremos utilizar um filtro padrão do AngularJs e um filtro criado por nós. Para utilizarmos um filtro, precisamos chamar o nome dele após o `|` quando estiver depois de uma variável ou diretiva.
+
+Podemos utilizar 1 ou mais filtros ao mesmo tempo, como podemos ver no código do exercício05:
+
+```
+<body>
+    <p>
+      <h3>Olá mundo, {{ nome | reverseName | uppercase }}</h3>
+
+      <!-- Adicionamos um input para inserirmos um valor para nome
+        adicionamos o atributo nd-model para linkarmos o valor
+        na váriavel do nosso escopo local $scope.nome
+     -->
+      <label for="nome">Seu nome: 
+        <input type="text" data-ng-model="nome"> 
+      </label>
+
+      <!-- O valor em {{ nome }} é atualizado automagicamente através
+          do two-way databinding
+      -->
+      <br>
+      <label for="workshop">Workshop: <input type="text" data-ng-model="workshop"> </label>
+    </p>
+
+    <script src="angular.min.js"></script>
+    <script>
+      angular.module('workshopBeMEAN', [])
+      .filter('reverseName', function () {
+        return function (text) {
+          if(text)
+            return text.split("").reverse().join("");
+        };
+      });
+    </script>
+  </body>
+```
+
+
+Aqui nós chamamos o filtro:
+
+```
+<h3>Olá mundo, {{ nome | reverseName | uppercase }}</h3>
+```
+
+Logo após a variável `nome` estamos chamando o filtro `reverseName` e o `uppercase`. O filtro `reverseName` foi definido abaixo:
+
+```
+<script>
+  angular.module('workshopBeMEAN', [])
+  .filter('reverseName', function () {
+    return function (text) {
+      if(text)
+        return text.split("").reverse().join("");
+    };
+  });
+</script>
+```
+
+Todos os filtros precisam receber ao menos um parâmetro que será o valor a ser modificado por ele, porém também podemos utilizar mais paramêtros como veremos mais para frente.
+
+No filtro `reverseName` o texto se transforma em um `array` com `split("")` para depois ser invertido com `reverse()` e aí sim ser juntado novamente como uma `string`, pois o Javascript não possui um método nativo de inversão de strings.
+
+
+
+
 
 
 
