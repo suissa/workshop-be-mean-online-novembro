@@ -32,17 +32,18 @@
       angular.module('workshopBeMEAN', ['workshopFilters', 'workshopControllers']);
 
       angular.module('workshopControllers', [])
-      .controller('BeerController', ['$scope', 
-        function($scope){
-          $scope.reverse = true;
+      .controller('BeerController', BeerController);
+
+       function BeerController ($scope){
+          $scope.reverse = false;
           $scope.predicate = 'name';
 
-          $scope.ordenar = function(){
-            $scope.reverse = !$scope.reverse;
+          $scope.ordenar = function() {
             $scope.predicate = 'price';
+            $scope.reverse = !$scope.reverse
           }
-
-          $scope.cervejas = [{
+        // criamos um array de cervejas
+          var cervejas = [{
             name: 'Kaiser', price: 2
             }, {
               name: 'Skol', price: 3
@@ -54,7 +55,12 @@
               name: 'Heineken', price: 10
             }
           ];
-      }]);
+        // instanciamos nosso array no nosso scope
+        // para que tenhamos acesso à esse array na View
+          $scope.cervejas = cervejas;
+      };
+
+      BeerController['$inject'] = ['$scope'];
 
       angular.module('workshopFilters', [])
         .filter('reverseName', function () {
