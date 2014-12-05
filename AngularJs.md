@@ -374,6 +374,12 @@ Para utilizarmos o `Controller` criado precisamos apenas chamar a diretiva `ng-c
 <div data-ng-controller='BeerController'>
 ```
 
+No exercício010 nós criamos um módulo apenas para nossos `Controllers`, pois eles irão crescer e também criei a função `ordenar` no `Controller` para ser chamada no `ng-click` do botão:
+
+```
+<button data-ng-click='ordenar()'>Ordenar</button>
+```
+
 
 
 **Style Guide: https://github.com/johnpapa/angularjs-styleguide**
