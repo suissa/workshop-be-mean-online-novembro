@@ -441,6 +441,59 @@ $scope.rodar = function(){
 }
 ```
 
+##Rotas
+
+Para começarmos o assunto das rotas iremos utilizar um projeto que vai iniciar um boilerplate com AngularJs para trabalharmos, o [angular-seed](https://github.com/angular/angular-seed). Basta clonarmos o repositório:
+
+```
+git clone https://github.com/angular/angular-seed.git
+cd angular-seed
+```
+
+Depois instalarmos as dependências:
+
+```
+npm install
+```
+
+E para rodarmos:
+
+```
+npm start
+```
+
+Depois de ver rodando em `localhost:8000` vamos ver o arquivo `app.js`:
+
+```
+'use strict';
+
+// Declare app level module which depends on views, and components
+angular.module('myApp', [
+  'ngRoute',
+  'myApp.view1',
+  'myApp.view2',
+  'myApp.version'
+]).
+config(['$routeProvider', function($routeProvider) {
+  $routeProvider.otherwise({redirectTo: '/view1'});
+}]);
+```
+
+E depois abrir o `view1/view1.js` vai perceber que o próprio módulo `myApp.view1` possui sua rota, isso deixa nosso código bem modular e não polui o arquivo principal.
+
+```
+angular.module('myApp.view1', ['ngRoute'])
+
+.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when('/view1', {
+    templateUrl: 'view1/view1.html',
+    controller: 'View1Ctrl'
+  });
+}])
+```
+
+
+
 
 
 
