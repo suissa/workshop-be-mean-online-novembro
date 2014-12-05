@@ -374,11 +374,74 @@ Para utilizarmos o `Controller` criado precisamos apenas chamar a diretiva `ng-c
 <div data-ng-controller='BeerController'>
 ```
 
-No exercício010 nós criamos um módulo apenas para nossos `Controllers`, pois eles irão crescer e também criei a função `ordenar` no `Controller` para ser chamada no `ng-click` do botão:
+No exercício09 nós criamos um módulo apenas para nossos `Controllers`, pois eles irão crescer e também criei a função `ordenar` no `Controller` para ser chamada no `ng-click` do botão:
 
 ```
 <button data-ng-click='ordenar()'>Ordenar</button>
 ```
+
+
+###$http
+
+O `$http` é o responsável pelas nossas requisições `HTTP` que nada mais é que o módulo utilizado para integramos com alguma `API`.
+
+No exercício010 iremos ver como utilizar o `$http` para consumirmos a `API` do [github](https://github.com).
+
+```
+var url = 'https://api.github.com/users/suissa';
+var method = 'GET';
+$http({
+  url: url,
+  method: method
+}).
+success(function(data){
+  console.log('Data: ', data);
+  $scope.user = data;
+}).
+error(function(err){
+  console.log('Erro: ', err);
+});
+```
+
+
+E na nossa `View` nós mostramos:
+
+```
+<div data-ng-controller='UserController'>
+  <button data-ng-click='rodar()'>Usuario</button>
+  <p data-ng-show='mostraUser'>
+    <img class='user-avatar' data-ng-src="{{user.avatar_url}}" alt="">
+    <br />
+    <span class='user-label'>Login:</span> {{user.login}} 
+    <br />
+    <span class='user-label'>Name:</span> {{user.name}}
+    <br />
+    <span class='user-label'>Company:</span> {{user.company}}
+    <br />
+    <span class='user-label'>Blog:</span> {{user.blog}}
+    <br />
+    <span class='user-label'>Email:</span> {{user.email}}
+    <br />
+    <span class='user-label'>Location:</span> {{user.location}}
+  </p>
+</div>
+```
+
+Perceba que ao iniciar a página ele não mostra o usuário, paenas se clickar no botão `Usuario` que mostra os dados abaixo. Para que isso aconteça usamos a diretiva `ng-show` que irá mostrar o conteúdo caso receba `true`, porém nós iniciamos ela com `false` no nosso `Controller`:
+
+```
+$scope.mostraUser = false;
+```
+
+Porém após clickar no botão e chamar a função `rodar()` ele muda esse valor e mostra o conteúdo abaixo. Ele serve como um toggle, pois a cada click ele irá inverter o valor de `mostraUser`.
+
+```
+$scope.rodar = function(){
+  $scope.mostraUser = !$scope.mostraUser;
+}
+```
+
+
 
 
 
