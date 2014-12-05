@@ -2,6 +2,7 @@
 
 ###INTRO - Teoria
 
+
 ##Iniciando
 
 Para iniciar uma aplicação com o AngularJs possuímos 3 formas: 
@@ -266,6 +267,18 @@ Sendo que nossa função do filtro fica assim:
 });
 ```
 
+Para utilizarmos parâmetros em nossos filtros precisamos apenas declarar mais argumentos na função do callback:
+
+```
+return function (text, length, end)
+```
+
+E para passarmos os parâmetros na chamada do filtro precisamos apenas separá-los por `:` como no nosso exemplo:
+
+```
+{{ nome | truncate:4:'... veja mais' }}
+```
+
 
 Perceba também que criamos um módulo para nossos filtros e apenas injetamos ele no módulo da nossa aplicação, será dessa forma que iremos modularizar nosso código no AngularJs.
 
@@ -301,7 +314,69 @@ Perceba também que criamos um módulo para nossos filtros e apenas injetamos el
 </script>
 ```
 
+##Controllers
 
+Os Controllers trabalham diretamente com a `view` podendo setar novos valores que serão visíveis nela, porém não se aconselha adicionar muita lógica nele, pois não é re-usável. 
+
+Além da discussão atual sobre, pois eles não existirão no AngularJs 2.0. Para isso devemos tentar utilizar o mínimo dele apenas para utilizarmos os `Services` os quais conterão nossa lógica, por isso o AngularJs é um MVVM (Mode, View, ViewModel) pois o `Controller` na verdade só liga os 2 sem realmente precisar conter lógica.
+
+Vamos criar um `Controller`e injetar o `$scope` para que ele possa criar variáveis acessíveis na nossa `View`:
+
+```
+angular.module('workshopBeMEAN', ['workshopFilters'])
+.controller('BeerController', ['$scope',
+  function($scope){
+    $scope.reverse = false;
+    $scope.predicate = 'name';
+  // criamos um array de cervejas
+    var cervejas = [{
+      name: 'Kaiser', price: 2
+      }, {
+        name: 'Skol', price: 3
+      }, {
+        name: 'Glacial', price: 4
+      }, {
+        name: 'Polar', price: 6
+      }, {
+        name: 'Heineken', price: 10
+      }
+    ];
+  // instanciamos nosso array no nosso scope
+  // para que tenhamos acesso à esse array na View
+    $scope.cervejas = cervejas;
+
+} ]);
+```
+
+Na nossa `View` além de iterarmos no array de cervejas, também chamamos o filtro `orderBy` que irá ordenar a listagem das cervejas e também tem interação com um link que modifica sua ordenação.
+
+```
+<div data-ng-controller='BeerController'>
+  {{ cervejas }}
+
+  <pre>Ordenando por predicate = {{predicate}}; reverse = {{reverse}}</pre>
+
+  <a href="" data-ng-click="predicate = 'price'; reverse=!reverse">Ordenar por: {{ predicate }}</a>
+
+  <ul>
+  <!-- Parecido com o nosso for no Jade -->
+    <li data-ng-repeat='cerveja in cervejas | orderBy:predicate:reverse'>
+    <!-- acessando os valores do array -->
+      {{ cerveja.name }} - {{ cerveja.price }}
+    </li>
+  </ul>
+</div>
+```
+
+Para utilizarmos o `Controller` criado precisamos apenas chamar a diretiva `ng-controller` na nossa `View`. Lembrando que o escopo criado existe apenas dentro desse `Controller`, logo o array de cervejas não existe fora dessa `div`:
+
+```
+<div data-ng-controller='BeerController'>
+```
+
+
+
+**Style Guide: https://github.com/johnpapa/angularjs-styleguide**
 
 
 
